@@ -1,0 +1,20 @@
+variacao_PIB <- read.table("c:/Econometria/Variacao.xls", header = T)
+var_PIB <- ts(variacao_PIB$variacao_PIB, start =1951, frequency = 1 )
+View(var_PIB)
+plot(var_PIB, main="Variacao do PIB Brasileiro", col="Blue", ylab="%PIB", xlab="Ano")
+acf(var_PIB)         
+pacf(var_PIB)        
+AR1 <- arima(var_PIB, order = c(1,0,0))   
+MA1 <- arima(var_PIB, order = c(0,0,1))   
+ARMA11 <- arima(var_PIB, order = c(1,0,1))
+
+estimacoes <- list(AR1, AR2, MA1, MA2, MA3, MA4, MA5, MA6, MA7, MA8, MA9, 
+                   ARMA11,ARMA12, ARMA13, ARMA14,ARMA15, ARMA16,ARMA17,ARMA18,ARMA19,ARMA21,ARMA22,ARMA23,ARMA24,ARMA25,ARMA26,ARMA27,ARMA28,ARMA29)
+sapply(estimacoes, AIC)         
+sapply(estimacoes, BIC)         
+AIC <- sapply(estimacoes, AIC) 
+BIC <- sapply(estimacoes, BIC)
+Modelo <- c("AR1", "AR2", "MA1", "MA2", "MA3", "MA4", "MA5", "MA6", "MA7", "MA8", "MA9", "ARMA11","ARMA12", "ARMA13", "ARMA14","ARMA15", "ARMA16","ARMA17","ARMA18","ARMA19","ARMA21","ARMA22","ARMA23","ARMA24","ARMA25","ARMA26","ARMA27","ARMA28","ARMA29")
+
+Resultados <- data.frame(Modelo, AIC, BIC)
+View(Resultados)
